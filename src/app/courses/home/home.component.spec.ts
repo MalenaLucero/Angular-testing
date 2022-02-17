@@ -52,8 +52,8 @@ describe('HomeComponent', () => {
 
 
   it("should display only beginner courses", () => {
-    console.log('it should only display beginner')
-    console.log(beginnerCourses)
+    //console.log('it should only display beginner')
+    //console.log(beginnerCourses)
     //the test is synchronous
     coursesService.findAllCourses.and.returnValue(of(beginnerCourses))
     fixture.detectChanges()
@@ -82,7 +82,7 @@ describe('HomeComponent', () => {
   });
 
 
-  it("should display advanced courses when tab clicked", () => {
+  it("should display advanced courses when tab clicked", (done: DoneFn) => {
 
     coursesService.findAllCourses.and.returnValue(of(setupCourses()))
     fixture.detectChanges()
@@ -91,10 +91,14 @@ describe('HomeComponent', () => {
     //click utility function
     click(tabs[1])
     fixture.detectChanges()
-    const cardTitles = el.queryAll(By.css('.mat-card-title'))
-    expect(cardTitles.length).toBeGreaterThan(0, 'could not find card titles')
-    expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course')
-
+    //animations can be asynchronous and make the tests fail
+    
+    setTimeout(() => {
+      const cardTitles = el.queryAll(By.css('.mat-card-title'))
+      expect(cardTitles.length).toBeGreaterThan(0, 'could not find card titles')
+      expect(cardTitles[0].nativeElement.textContent).toContain('Angular Testing Course')
+      done()
+    }, 500) 
   });
 
 });
