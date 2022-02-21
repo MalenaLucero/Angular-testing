@@ -112,7 +112,6 @@ describe('HomeComponent', () => {
 
     //callback of waitForAsync
     fixture.whenStable().then(() => {
-      console.log('whenStable()')
         const cardTitles = el.queryAll(By.css('.mat-tab-body-active .mat-card-title'))
         expect(cardTitles.length).toBeGreaterThan(0, 'could not find card titles')
         expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course')
